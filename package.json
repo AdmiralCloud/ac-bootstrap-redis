@@ -1,0 +1,15 @@
+{
+  "name": "ac-bootstrap-redis",
+  "version": "0.1.5",
+  "description": "Redis init for AC apps",
+  "repository": "admiralcloud/ac-bootstrap-redis",
+  "author": "Mark Poepping <mark.poepping@admiralcloud.com>",
+  "license": "MIT",
+  "dependencies": {
+    "ac-semantic-release": "^0.2.7",
+    "async": "^3.2.1",
+    "eslint": "^7.32.0",
+    "ioredis": "^4.27.10",
+    "lodash": "^4.17.21"
+  }
+}
