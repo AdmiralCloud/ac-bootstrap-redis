@@ -7,9 +7,9 @@
   "license": "MIT",
   "dependencies": {
     "ac-semantic-release": "^0.2.7",
-    "async": "^3.2.1",
-    "eslint": "^7.32.0",
-    "ioredis": "^4.27.10",
+    "async": "^3.2.2",
+    "eslint": "^8.3.0",
+    "ioredis": "^4.28.1",
     "lodash": "^4.17.21"
   }
 }
