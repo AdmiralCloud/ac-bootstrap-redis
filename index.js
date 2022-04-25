@@ -23,12 +23,18 @@ module.exports = (acapi, options, cb) => {
 
     let redisBaseOptions = {
       host: _.get(server, 'host'),
-      port: acapi.config.localRedis ? 6379 : _.get(server, 'port'),
+      port:  _.get(server, 'port'),
       db: _.get(database, 'db')
     }
     if (_.get(acapi.config, 'redis.retryStrategy')) _.set(redisBaseOptions, 'retryStrategy', _.get(acapi.config, 'redis.retryStrategy'))
     if (_.get(acapi.config, 'redis.timeout')) _.set(redisBaseOptions, 'connectTimeout', _.get(acapi.config, 'redis.timeout'))
     if (_.get(acapi.config, 'redis.connectTimeout')) _.set(redisBaseOptions, 'connectTimeout', _.get(acapi.config, 'redis.connectTimeout'))
+
+    if (acapi.config.localRedis) {
+      _.forOwn(acapi.config.localRedis, (val, key) => {
+        _.set(redisBaseOptions, key, val)
+      })
+    }
 
     acapi.redis[name] = new Redis(redisBaseOptions)
 
