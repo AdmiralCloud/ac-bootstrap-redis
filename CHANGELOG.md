@@ -1,3 +1,20 @@
+<a name="0.0.4"></a>
+
+## [0.0.4](https://github.com/admiralcloud/ac-bootstrap-redis/compare/v0.0.3..v0.0.4) (2022-04-25 12:29:47)
+
+
+### Bug Fix
+
+* **App:** Allow all parameters for localRedis | MP | [372c9864ee1acadd0433effd663959db81d36b7f](https://github.com/admiralcloud/ac-bootstrap-redis/commit/372c9864ee1acadd0433effd663959db81d36b7f)    
+Instead of a fixed set for localRedis, it is now possible to set port, host, etc  
+Related issues: [undefined/undefined#master](undefined/browse/master)
+### Chores
+
+* **App:** Updated packages | MP | [a5a248f7d9f90e00e7dbba7f8e468843b67c0992](https://github.com/admiralcloud/ac-bootstrap-redis/commit/a5a248f7d9f90e00e7dbba7f8e468843b67c0992)    
+Updated packages  
+Related issues: [undefined/undefined#master](undefined/browse/master)
+* **App:** Updated packages | MP | [225b89a1951775a8d01a9f7fafe5ad6e76b88838](https://github.com/admiralcloud/ac-bootstrap-redis/commit/225b89a1951775a8d01a9f7fafe5ad6e76b88838)    
+Updated packages
 <a name="0.0.3"></a>
 
 ## [0.0.3](https://github.com/admiralcloud/ac-bootstrap-redis/compare/v0.0.2..v0.0.3) (2022-03-06 15:44:32)
