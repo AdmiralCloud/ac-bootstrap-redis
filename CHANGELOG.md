@@ -1,3 +1,18 @@
+<a name="0.0.5"></a>
+
+## [0.0.5](https://github.com/admiralcloud/ac-bootstrap-redis/compare/v0.0.4..v0.0.5) (2022-05-10 08:40:51)
+
+
+### Bug Fix
+
+* **App:** Allow option enableAutoPipelining | MP | [9f62477457847f7f972cb64a85dd39a9899ff180](https://github.com/admiralcloud/ac-bootstrap-redis/commit/9f62477457847f7f972cb64a85dd39a9899ff180)    
+Allow option enableAutoPipelining  
+Related issues: [undefined/undefined#master](undefined/browse/master)
+### Chores
+
+* **App:** Updated packages | MP | [3e2b5fdd0b06528de9af935ea63aefd89468f64a](https://github.com/admiralcloud/ac-bootstrap-redis/commit/3e2b5fdd0b06528de9af935ea63aefd89468f64a)    
+Updated packages  
+Related issues: [undefined/undefined#master](undefined/browse/master)
 <a name="0.0.4"></a>
 
 ## [0.0.4](https://github.com/admiralcloud/ac-bootstrap-redis/compare/v0.0.3..v0.0.4) (2022-04-25 12:29:47)
