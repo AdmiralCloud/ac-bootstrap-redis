@@ -26,9 +26,11 @@ module.exports = (acapi, options, cb) => {
       port:  _.get(server, 'port'),
       db: _.get(database, 'db')
     }
-    if (_.get(acapi.config, 'redis.retryStrategy')) _.set(redisBaseOptions, 'retryStrategy', _.get(acapi.config, 'redis.retryStrategy'))
-    if (_.get(acapi.config, 'redis.timeout')) _.set(redisBaseOptions, 'connectTimeout', _.get(acapi.config, 'redis.timeout'))
-    if (_.get(acapi.config, 'redis.connectTimeout')) _.set(redisBaseOptions, 'connectTimeout', _.get(acapi.config, 'redis.connectTimeout'))
+
+    const availableOptions = ['retryStrategy', 'timeout', 'connectTimeout', 'enableAutoPipelining']
+    _.forEach(availableOptions, option => {
+      if (_.get(acapi.config, `redis.${option}`)) _.set(redisBaseOptions, option, _.get(acapi.config, `redis.${option}`))
+    })
 
     if (acapi.config.localRedis) {
       _.forOwn(acapi.config.localRedis, (val, key) => {
