@@ -14,7 +14,6 @@ module.exports = (acapi, options, cb) => {
 
   // init multiple instances for different purposes
   acapi.redis = {}
-  let lastInvoked = 0
   async.eachSeries(_.get(acapi.config, 'redis.databases'), (database, itDone) => {
     if (_.get(database, 'ignoreBootstrap')) return itDone()
     let name = _.get(database, 'name')
@@ -24,7 +23,12 @@ module.exports = (acapi, options, cb) => {
     let redisBaseOptions = {
       host: _.get(server, 'host'),
       port:  _.get(server, 'port'),
-      db: _.get(database, 'db')
+      db: _.get(database, 'db'),
+      retryStrategy: (times) => {
+        const retryArray = [1,2,2,5,5,5,10,10,10,10,15]
+        const delay = times < retryArray.length ? retryArray[times] : retryArray.at(retryArray.length)
+        return delay*1000
+      }
     }
 
     const availableOptions = ['retryStrategy', 'timeout', 'connectTimeout', 'enableAutoPipelining']
@@ -41,10 +45,7 @@ module.exports = (acapi, options, cb) => {
     acapi.redis[name] = new Redis(redisBaseOptions)
 
     acapi.redis[name].on('error', (err) => {
-      if (lastInvoked === 0 || lastInvoked < new Date().getTime()) {
-        acapi.log.error('REDIS | Problem | %s | %s', name, _.get(err, 'message'))
-        lastInvoked = new Date().getTime() + _.get(acapi.config, 'redis.errorInterval', 5000) // 5000 = interval in ms
-      }
+      acapi.log.error('REDIS | Problem | %s | %s', name.padEnd(25), _.get(err, 'message'))
     })
 
     acapi.redis[name]._readyCheck((err) => {
