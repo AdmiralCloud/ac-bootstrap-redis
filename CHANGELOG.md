@@ -1,3 +1,13 @@
+<a name="0.0.7"></a>
+
+## [0.0.7](https://github.com/admiralcloud/ac-bootstrap-redis/compare/v0.0.6..v0.0.7) (2023-01-28 18:42:41)
+
+
+### Bug Fix
+
+* **App:** Improved error handling and retry strategy | MP | [5c0f5d24a192e1c04cb7e868e7b4a7b5e24d16a2](https://github.com/admiralcloud/ac-bootstrap-redis/commit/5c0f5d24a192e1c04cb7e868e7b4a7b5e24d16a2)    
+Retry strategy is now set by default - no need to add it per app (unless you want a different strategy). Improved error handling - error event is only called if retry is active - so there should not be any over logging.  
+Related issues: [undefined/undefined#master](undefined/browse/master)
 <a name="0.0.6"></a>
 
 ## [0.0.6](https://github.com/admiralcloud/ac-bootstrap-redis/compare/v0.0.5..v0.0.6) (2023-01-28 17:58:02)
