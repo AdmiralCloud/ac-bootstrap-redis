@@ -1,3 +1,18 @@
+<a name="0.1.0"></a>
+ 
+# [0.1.0](https://github.com/admiralcloud/ac-bootstrap-redis/compare/v0.0.9..v0.1.0) (2023-09-02 06:41:50)
+
+
+### Feature
+
+* **App:** You can use async or callback | MP | [56836eaf78046900599f1df4adf77537798999e9](https://github.com/admiralcloud/ac-bootstrap-redis/commit/56836eaf78046900599f1df4adf77537798999e9)    
+Rewritten code, so async (preferred) or callback (legacy) can be used. ALso added TLS option for Redis.  
+Related issues: [undefined/undefined#master](undefined/browse/master)
+### Chores
+
+* **App:** Updated packages | MP | [c5df7b55d6d7c62689a81149710202dd0639af74](https://github.com/admiralcloud/ac-bootstrap-redis/commit/c5df7b55d6d7c62689a81149710202dd0639af74)    
+Updated packages  
+Related issues: [undefined/undefined#master](undefined/browse/master)
 <a name="0.0.9"></a>
 
 ## [0.0.9](https://github.com/admiralcloud/ac-bootstrap-redis/compare/v0.0.8..v0.0.9) (2023-07-02 12:23:15)
