@@ -1,6 +1,6 @@
 {
   "name": "ac-bootstrap-redis",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Redis init for AC apps",
   "repository": "admiralcloud/ac-bootstrap-redis",
   "author": "Mark Poepping <mark.poepping@admiralcloud.com>",
