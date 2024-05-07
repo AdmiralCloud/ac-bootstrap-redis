@@ -6,11 +6,11 @@
   "author": "Mark Poepping <mark.poepping@admiralcloud.com>",
   "license": "MIT",
   "dependencies": {
-    "ioredis": "^5.3.2",
+    "ioredis": "^5.4.1",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
     "ac-semantic-release": "^0.4.2",
-    "eslint": "^8.48.0"
+    "eslint": "^8.57.0"
   }
 }
