@@ -96,7 +96,7 @@ module.exports = (acapi, options, cb) => {
   }
 
   if (cb) {
-    console.log("ac-bootstrap-redis -> Warning: The callback method is considered legacy. Please use the async/await approach.");
+    console.warn("ac-bootstrap-redis -> Warning: The callback method is considered legacy. Please use the async/await approach.");
     init(acapi, options)
         .then(() => cb(null))
         .catch(err => {
