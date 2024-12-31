@@ -1,3 +1,13 @@
+<a name="0.1.3"></a>
+
+## [0.1.3](https://github.com/admiralcloud/ac-bootstrap-redis/compare/v0.1.2..v0.1.3) (2024-12-31 09:46:13)
+
+
+### Bug Fix
+
+* **App:** Package updates | MP | [ce09b8868076cde61f61cdb752c587ea719b0713](https://github.com/admiralcloud/ac-bootstrap-redis/commit/ce09b8868076cde61f61cdb752c587ea719b0713)    
+Package updates  
+Related issues: [undefined/undefined#master](undefined/browse/master)
 <a name="0.1.2"></a>
 
 ## [0.1.2](https://github.com/admiralcloud/ac-bootstrap-redis/compare/v0.1.1..v0.1.2) (2024-06-14 17:01:50)
