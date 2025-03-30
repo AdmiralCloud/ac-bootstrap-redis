@@ -1,6 +1,6 @@
 {
   "name": "ac-bootstrap-redis",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Redis init for AC apps",
   "repository": {
     "url": "git+https://github.com/admiralcloud/ac-bootstrap-redis.git"

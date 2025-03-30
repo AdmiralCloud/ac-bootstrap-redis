@@ -1,3 +1,17 @@
+
+## [0.1.4](https://github.com/admiralcloud/ac-bootstrap-redis/compare/v0.1.3..v0.1.4) (2025-03-30 18:23:17)
+
+
+### Bug Fix
+
+* **App:** Package updates | MP | [a42a0c34c0bc2095784f3633dcbfd82bdc69335d](https://github.com/admiralcloud/ac-bootstrap-redis/commit/a42a0c34c0bc2095784f3633dcbfd82bdc69335d)    
+Package updates  
+Related issues:
+### Chores
+
+* **App:** Update package.json structure | MP | [ceb41eb258931e2a5baa27b60ec79c94f85ad9db](https://github.com/admiralcloud/ac-bootstrap-redis/commit/ceb41eb258931e2a5baa27b60ec79c94f85ad9db)    
+Update package.json structure  
+Related issues:
 <a name="0.1.3"></a>
 
 ## [0.1.3](https://github.com/admiralcloud/ac-bootstrap-redis/compare/v0.1.2..v0.1.3) (2024-12-31 09:46:13)
