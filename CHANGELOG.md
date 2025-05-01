@@ -1,3 +1,24 @@
+ 
+# [1.0.0](https://github.com/admiralcloud/ac-bootstrap-redis/compare/v0.1.4..v1.0.0) (2025-05-01 05:28:06)
+
+
+### Refactor
+
+* **App:** Use modular functions | MP | [bf38da7019b0b452e10524ef28c9d075d38a7d9b](https://github.com/admiralcloud/ac-bootstrap-redis/commit/bf38da7019b0b452e10524ef28c9d075d38a7d9b)    
+Use modular functions and async/await only  
+Related issues:
+### Tests
+
+* **App:** Added tests | MP | [8a8d6b50890d968f3a3dfe7f818a33d2ceb2a2d7](https://github.com/admiralcloud/ac-bootstrap-redis/commit/8a8d6b50890d968f3a3dfe7f818a33d2ceb2a2d7)    
+Added tests  
+Related issues:
+### Chores
+
+* **App:** Updated packages | MP | [42d4f90e123db65590ff0c541c53fbf1ff365b0b](https://github.com/admiralcloud/ac-bootstrap-redis/commit/42d4f90e123db65590ff0c541c53fbf1ff365b0b)    
+Updated packages  
+Related issues:
+## BREAKING CHANGES
+* **App:** Async/await only
 
 ## [0.1.4](https://github.com/admiralcloud/ac-bootstrap-redis/compare/v0.1.3..v0.1.4) (2025-03-30 18:23:17)
 
