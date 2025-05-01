@@ -20,9 +20,9 @@ npm-debug.log
 ########################
 doc
 report.xml
+debug.js
 
 ########################
 # local config
 ########################
 .jenkins.conf
-test.js
