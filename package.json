@@ -12,10 +12,10 @@
     "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "ac-semantic-release": "^0.4.7",
+    "ac-semantic-release": "^0.4.8",
     "chai": "^5.3.3",
-    "eslint": "^9.34.0",
-    "mocha": "^11.7.1"
+    "eslint": "^9.35.0",
+    "mocha": "^11.7.2"
   },
   "scripts": {
     "test": "mocha test/test.js"
