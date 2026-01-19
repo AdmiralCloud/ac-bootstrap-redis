@@ -8,13 +8,13 @@
   "author": "Mark Poepping <mark.poepping@admiralcloud.com>",
   "license": "MIT",
   "dependencies": {
-    "ioredis": "^5.8.2",
+    "ioredis": "^5.9.2",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
     "ac-semantic-release": "^0.4.8",
     "chai": "^5.3.3",
-    "eslint": "^9.39.1",
+    "eslint": "^9.39.2",
     "mocha": "^11.7.5"
   },
   "scripts": {
