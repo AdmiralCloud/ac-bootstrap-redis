@@ -20,16 +20,16 @@ module.exports = async (acapi, options = {}) => {
 
     // Wait for all Redis connections in parallel
     await Promise.all(databases.map(async database => {
-      if (_.get(database, 'ignoreBootstrap')) return
+      if (_.get(database, 'ignoreBootstrap')) { return }
       
       const name = _.get(database, 'name')
-      if (!name) throw new Error('missingNameForRedisDatabase')
+      if (!name) { throw new Error('missingNameForRedisDatabase') }
       
       const logName = _.padEnd(name, 18)
       const server = _.find(acapi.config.redis.servers, { server: _.get(database, 'server') })
-      if (!server) throw new Error(`serverConfigurationMissingForRedis: ${database.server}`)
+      if (!server) { throw new Error(`serverConfigurationMissingForRedis: ${database.server}`) }
 
-      let redisBaseOptions = buildRedisOptions({ acapi, server, database })
+      const redisBaseOptions = buildRedisOptions({ acapi, server, database })
 
       // Create the Redis instance
       acapi.redis[name] = new Redis(redisBaseOptions)
@@ -54,7 +54,7 @@ module.exports = async (acapi, options = {}) => {
     return logConnector
   } 
   catch (error) {
-    if (bootstrapping) throw error
+    if (bootstrapping) { throw error }
     
     acapi.log.error('Bootstrap.initRedis:failed with %j', error)
     process.exit(0)
@@ -70,7 +70,7 @@ module.exports = async (acapi, options = {}) => {
  * @returns {Object} Redis options
  */
 function buildRedisOptions({ acapi, server, database }) {
-  let redisBaseOptions = {
+  const redisBaseOptions = {
     host: _.get(server, 'host'),
     port: _.get(server, 'port'),
     db: _.get(database, 'db'),
@@ -81,11 +81,11 @@ function buildRedisOptions({ acapi, server, database }) {
     }
   }
 
-  if (_.get(server, 'tls')) redisBaseOptions.tls = _.get(server, 'tls')
+  if (_.get(server, 'tls')) { redisBaseOptions.tls = _.get(server, 'tls') }
 
   const availableOptions = ['retryStrategy', 'timeout', 'connectTimeout', 'enableAutoPipelining']
   _.forEach(availableOptions, option => {
-    if (_.get(acapi.config, `redis.${option}`)) _.set(redisBaseOptions, option, _.get(acapi.config, `redis.${option}`))
+    if (_.get(acapi.config, `redis.${option}`)) { _.set(redisBaseOptions, option, _.get(acapi.config, `redis.${option}`)) }
   })
 
   if (acapi.config.localRedis) {
