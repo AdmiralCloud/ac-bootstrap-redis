@@ -1,4 +1,13 @@
 
+## [1.0.7](https://github.com/admiralcloud/ac-bootstrap-redis/compare/v1.0.6..v1.0.7) (2026-02-24 15:58:27)
+
+
+### Bug Fix
+
+* **App:** Package updates | MP | [85206860b016be3d0168381e7289ea36208323ed](https://github.com/admiralcloud/ac-bootstrap-redis/commit/85206860b016be3d0168381e7289ea36208323ed)    
+Package updates incl ESLint 9 -> 10 and lint fixes  
+Related issues:
+
 ## [1.0.6](https://github.com/admiralcloud/ac-bootstrap-redis/compare/v1.0.5..v1.0.6) (2026-01-23 13:34:33)
 
 
