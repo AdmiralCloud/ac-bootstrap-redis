@@ -9,12 +9,12 @@
   "license": "MIT",
   "dependencies": {
     "ioredis": "^5.10.1",
-    "lodash": "^4.17.23"
+    "lodash": "^4.18.1"
   },
   "devDependencies": {
-    "ac-semantic-release": "^0.4.10",
+    "ac-semantic-release": "^1.0.1",
     "chai": "^5.3.3",
-    "eslint": "^10.1.0",
+    "eslint": "^10.2.0",
     "globals": "^17.4.0",
     "mocha": "^11.7.5"
   },
