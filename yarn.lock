@@ -255,10 +255,10 @@
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.15.tgz#596a1747233694d50f6ad8a7869fcb6f56cf5841"
   integrity sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==
 
-ac-semantic-release@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/ac-semantic-release/-/ac-semantic-release-1.0.1.tgz#8dce69b703334fb8acf522b2e0ab1a65969fd610"
-  integrity sha512-Gy2sPbPX8kU4o+RE0wCFOmYttIqpvNhHqzC74HcE4YAHy3g89MtTkW5JMVF2W/9GVKjFkZDOvYyLEiWK9X3BYw==
+ac-semantic-release@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/ac-semantic-release/-/ac-semantic-release-1.0.2.tgz#8d3e6663474ff02b9093201a93ad3247d4cf58c4"
+  integrity sha512-vqKFi8gfMOwmLj6oJYWm1fIV/YGQ2I92w9UTWFte1MR0aLz6w7K+rJemR+nax3CFo36l1D6pV40zl3GPkH1H1w==
   dependencies:
     inquirer "^12.11.1"
     lodash.merge "^4.6.2"
@@ -639,10 +639,10 @@ glob@^10.4.5:
     package-json-from-dist "^1.0.0"
     path-scurry "^1.11.1"
 
-globals@^17.4.0:
-  version "17.4.0"
-  resolved "https://registry.yarnpkg.com/globals/-/globals-17.4.0.tgz#33d7d297ed1536b388a0e2f4bcd0ff19c8ff91b5"
-  integrity sha512-hjrNztw/VajQwOLsMNT1cbJiH2muO3OROCHnbehc8eY5JyD2gqz4AcMHPqgaOR59DjgUjYAYLeH699g/eWi2jw==
+globals@^17.5.0:
+  version "17.5.0"
+  resolved "https://registry.yarnpkg.com/globals/-/globals-17.5.0.tgz#a82c641d898f8dfbe0e81f66fdff7d0de43f88c6"
+  integrity sha512-qoV+HK2yFl/366t2/Cb3+xxPUo5BuMynomoDmiaZBIdbs+0pYbjfZU+twLhGKp4uCZ/+NbtpVepH5bGCxRyy2g==
 
 has-flag@^4.0.0:
   version "4.0.0"
