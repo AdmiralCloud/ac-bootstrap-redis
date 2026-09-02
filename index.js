@@ -1,69 +1,74 @@
 /**
  * Takes the object that has .log and .config available and adds .redis functions to it.
+ * @param {Object} acapi - API object with .log and .config
+ * @param {Object} options - Module options
+ * @param {boolean} [options.bootstrapping=true] - Whether to throw errors during bootstrapping
+ * @param {boolean} [options.flushInTestmode=false] - Whether to flush databases in test mode
+ * @returns {Promise<{logConnector: Array, disconnect: Function}>}
  */
-const _ = require('lodash') 
+const tls = require('tls')
 const Redis = require('ioredis')
 
 module.exports = async (acapi, options = {}) => {
-  const bootstrapping = _.get(options, 'bootstrapping', true)
+  const bootstrapping = options?.bootstrapping ?? true
   const logConnector = []
+  const instanceNames = []
 
   try {
-    // Initialize multiple Redis instances for different purposes
     acapi.redis = {}
-    const databases = _.get(acapi.config, 'redis.databases', [])
-    
-    // Validate that databases are configured
-    if (!_.size(databases)) {
+    const databases = acapi.config?.redis?.databases ?? []
+
+    if (!databases.length) {
       throw new Error('noDatabasesConfiguredForRedis')
     }
 
-    // Wait for all Redis connections in parallel
     await Promise.all(databases.map(async database => {
-      if (_.get(database, 'ignoreBootstrap')) { return }
-      
-      const name = _.get(database, 'name')
+      if (database?.ignoreBootstrap) { return }
+
+      const name = database?.name
       if (!name) { throw new Error('missingNameForRedisDatabase') }
-      
-      const logName = _.padEnd(name, 18)
-      const server = _.find(acapi.config.redis.servers, { server: _.get(database, 'server') })
+
+      const logName = name.padEnd(18)
+      const server = acapi.config.redis.servers.find(s => s.server === database?.server)
       if (!server) { throw new Error(`serverConfigurationMissingForRedis: ${database.server}`) }
 
       const redisBaseOptions = buildRedisOptions({ acapi, server, database })
 
-      // Create the Redis instance
       acapi.redis[name] = new Redis(redisBaseOptions)
+      instanceNames.push(name)
 
-      // Global error handler for runtime
-      acapi.redis[name].on('error', (err) => {
-        acapi.log.error('REDIS | %s | Error %s', logName, _.get(err, 'message'))
-      })
-
-      // Wait for Ready event
-      await connectToRedis({ 
-        acapi, 
-        name, 
-        logName, 
-        redisOptions: redisBaseOptions, 
-        database, 
-        moduleOptions: options, 
-        logConnector 
+      await connectToRedis({
+        acapi,
+        name,
+        logName,
+        redisOptions: redisBaseOptions,
+        database,
+        moduleOptions: options,
+        logConnector
       })
     }))
 
-    return logConnector
-  } 
+    const disconnect = async () => {
+      await Promise.all(instanceNames.map(name => {
+        if (acapi.redis[name]) {
+          return acapi.redis[name].quit()
+        }
+      }))
+    }
+
+    return { logConnector, disconnect }
+  }
   catch (error) {
     if (bootstrapping) { throw error }
-    
+
     acapi.log.error('Bootstrap.initRedis:failed with %j', error)
-    process.exit(0)
+    process.exit(1)
   }
 }
 
 /**
  * Builds Redis connection options from configuration
- * @param {Object} params - Function parameters
+ * @param {Object} params
  * @param {Object} params.acapi - The API object
  * @param {Object} params.server - Server configuration
  * @param {Object} params.database - Database configuration
@@ -71,27 +76,28 @@ module.exports = async (acapi, options = {}) => {
  */
 function buildRedisOptions({ acapi, server, database }) {
   const redisBaseOptions = {
-    host: _.get(server, 'host'),
-    port: _.get(server, 'port'),
-    db: _.get(database, 'db'),
+    host: server.host,
+    port: server.port,
+    db: database.db,
     retryStrategy: (times) => {
       const retryArray = [1, 2, 2, 5, 5, 5, 10, 10, 10, 10, 15]
-      const delay = times < retryArray.length ? retryArray[times] : retryArray.at(-1) // Fixed: use -1 instead of length
+      const delay = times < retryArray.length ? retryArray[times] : retryArray.at(-1)
       return delay * 1000
     }
   }
 
-  if (_.get(server, 'tls')) { redisBaseOptions.tls = _.get(server, 'tls') }
+  if (server.tls) { redisBaseOptions.tls = server.tls }
 
   const availableOptions = ['retryStrategy', 'timeout', 'connectTimeout', 'enableAutoPipelining']
-  _.forEach(availableOptions, option => {
-    if (_.get(acapi.config, `redis.${option}`)) { _.set(redisBaseOptions, option, _.get(acapi.config, `redis.${option}`)) }
-  })
+  for (const option of availableOptions) {
+    const val = acapi.config?.redis?.[option]
+    if (val !== undefined) { redisBaseOptions[option] = val }
+  }
 
   if (acapi.config.localRedis) {
-    _.forOwn(acapi.config.localRedis, (val, key) => {
-      _.set(redisBaseOptions, key, val)
-    })
+    for (const [key, val] of Object.entries(acapi.config.localRedis)) {
+      redisBaseOptions[key] = val
+    }
   }
 
   return redisBaseOptions
@@ -99,7 +105,7 @@ function buildRedisOptions({ acapi, server, database }) {
 
 /**
  * Connects to Redis and waits for the ready event
- * @param {Object} params - Function parameters
+ * @param {Object} params
  * @param {Object} params.acapi - The API object
  * @param {String} params.name - Redis instance name
  * @param {String} params.logName - Formatted name for logs
@@ -107,59 +113,73 @@ function buildRedisOptions({ acapi, server, database }) {
  * @param {Object} params.database - Database configuration
  * @param {Object} params.moduleOptions - Module options
  * @param {Array} params.logConnector - Log collector array
- * @returns {Promise} Connection promise
+ * @returns {Promise<void>}
  */
-async function connectToRedis({ acapi, name, logName, redisOptions, database, moduleOptions, logConnector }) {
+function connectToRedis({ acapi, name, logName, redisOptions, database, moduleOptions, logConnector }) {
   return new Promise((resolve, reject) => {
-    // Register error handler only for initialization phase
+    const timeoutMs = redisOptions.connectTimeout || 10000
+
     const errorHandler = (err) => {
-      acapi.log.error('REDIS | %s | Error %s', logName, _.get(err, 'message'))
+      clearTimeout(timeoutId)
+      acapi.redis[name].removeListener('error', errorHandler)
+      acapi.log.error('REDIS | %s | Error %s', logName, err?.message)
       reject(err)
     }
-    
+
+     
+    let timeoutId = setTimeout(() => {
+      acapi.redis[name].removeListener('error', errorHandler)
+      reject(new Error(`redisConnectionTimeout: ${name}`))
+    }, timeoutMs)
+
     acapi.redis[name].on('error', errorHandler)
 
-    acapi.redis[name].once('ready', async() => {
-      // Remove the temporary error handler
+    acapi.redis[name].once('ready', async () => {
+      clearTimeout(timeoutId)
       acapi.redis[name].removeListener('error', errorHandler)
-      
-      // Collect connection information
+
       logConnector.push({ field: 'Name', value: name })
       logConnector.push({ field: 'Host/Port', value: `${redisOptions.host} ${redisOptions.port}` })
       logConnector.push({ field: 'DB', value: database.db.toString() })
 
-      // Capture TLS information
       const stream = acapi.redis[name].stream
-      if (stream && stream instanceof require('tls').TLSSocket) {
-        const cipher = stream.getCipher().name
+      if (stream && stream instanceof tls.TLSSocket) {
+        const cipher = stream.getCipher()?.name ?? 'unknown'
         const value = (stream.encrypted ? '\x1b[32mEncrypted\x1b[0m' : 'NOT ENCRYPTED') + ' | ' + cipher
         logConnector.push({ field: 'TLS', value })
       }
 
       logConnector.push({ field: 'Connection', value: '\x1b[32mSuccessful\x1b[0m' })
 
-      // Register runtime event handlers
       setupRuntimeEventHandlers({ acapi, name, logName })
 
-      // Flush Redis in test mode
-      if (acapi.config.environment === 'test' && _.get(moduleOptions, 'flushInTestmode')) {
-        await acapi.redis[name].flushdb()
-        logConnector.push({ field: 'Flushed', value: '\x1b[32mSuccessful\x1b[0m' })
+      if (acapi.config.environment === 'test' && moduleOptions?.flushInTestmode) {
+        try {
+          await acapi.redis[name].flushdb()
+          logConnector.push({ field: 'Flushed', value: '\x1b[32mSuccessful\x1b[0m' })
+        }
+        catch (flushErr) {
+          return reject(flushErr)
+        }
       }
-      
+
       resolve()
     })
   })
 }
 
 /**
- * Sets up event handlers for runtime events
- * @param {Object} params - Function parameters
+ * Sets up event handlers for runtime events (called after successful connection)
+ * @param {Object} params
  * @param {Object} params.acapi - The API object
  * @param {String} params.name - Redis instance name
  * @param {String} params.logName - Formatted name for logs
  */
 function setupRuntimeEventHandlers({ acapi, name, logName }) {
+  acapi.redis[name].on('error', (err) => {
+    acapi.log.error('REDIS | %s | Error %s', logName, err?.message)
+  })
+
   acapi.redis[name].on('connect', () => {
     acapi.log.debug('REDIS | %s | Connected', logName)
   })

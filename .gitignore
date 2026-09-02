@@ -26,3 +26,4 @@ debug.js
 # local config
 ########################
 .jenkins.conf
+.claude
