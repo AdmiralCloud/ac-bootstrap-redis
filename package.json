@@ -1,6 +1,6 @@
 {
   "name": "ac-bootstrap-redis",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Redis init for AC apps",
   "repository": {
     "url": "git+https://github.com/admiralcloud/ac-bootstrap-redis.git"
@@ -8,14 +8,15 @@
   "author": "Mark Poepping <mark.poepping@admiralcloud.com>",
   "license": "MIT",
   "dependencies": {
-    "ioredis": "^5.10.1"
+    "ioredis": "^5.11.1",
+    "lodash": "^4.18.1"
   },
   "devDependencies": {
-    "ac-semantic-release": "^1.0.2",
+    "ac-semantic-release": "^1.0.5",
     "chai": "^5.3.3",
-    "eslint": "^10.9.1",
-    "globals": "^17.12.0",
-    "mocha": "^12.0.0"
+    "eslint": "^10.14.0",
+    "globals": "^17.14.0",
+    "mocha": "^11.8.0"
   },
   "scripts": {
     "test": "mocha test/test.js"
