@@ -1,3 +1,12 @@
+## [1.0.11](https://github.com/admiralcloud/ac-bootstrap-redis/compare/v1.0.10..v1.0.11) (2026-11-08 20:38:20)
+
+
+### Chores
+
+
+* **App:** Updated packages | MP | [ce6de19ac452d607bc136038efb553d064cc5c51](https://github.com/admiralcloud/ac-bootstrap-redis/commit/ce6de19ac452d607bc136038efb553d064cc5c51)    
+Updated packages  
+Related issues:
 ## [1.0.10](https://github.com/admiralcloud/ac-bootstrap-redis/compare/v1.0.9..v1.0.10) (2026-04-17 07:50:29)
 
 
